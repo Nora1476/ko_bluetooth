@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)  // XML 레이아웃 파일을 사용하여 UI를 구성
 
 
-        // 네트워크 연결 상태 확인 후 토스트 메시지로 결과 표시
+        // 네트워크 연결 상태 확인 및 사용자에게 상태 알림
         if (isNetworkAvailable(this)) {
             Toast.makeText(this, "네트워크 연결됨", Toast.LENGTH_LONG).show()
         } else {
