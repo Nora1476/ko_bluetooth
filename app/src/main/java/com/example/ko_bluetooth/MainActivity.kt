@@ -11,32 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
-import android.content.BroadcastReceiver
-
-import android.content.Intent
-import android.content.IntentFilter
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 
 
 class MainActivity : AppCompatActivity() {
-    private var bluetoothAdapter: BluetoothAdapter? = null
-    private val REQUEST_ENABLE_BT = 1
-    private val REQUEST_BLUETOOTH_SCAN = 100
-    private val REQUEST_BLUETOOTH_CONNECT = 101
 
     //액티비티 생명주기 중 하나로, 액티비티가 생성될 때 호출.
-    // 이 메소드 내에서 UI를 설정하고, 초기화 작업을 수행
+    // 이 메소드 내에서 UI를 설정하고, 초기화ㄹ 작업을 수행
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge() //앱 컨텐츠가 상태 바, 내비게이션 바 아래로 확장될 수 있게
         setContentView(R.layout.activity_main)  // XML 레이아웃 파일을 사용하여 UI를 구성
-
+        enableEdgeToEdge() //앱 컨텐츠가 상태 바, 내비게이션 바 아래로 확장될 수 있게
 
         // 네트워크 연결 상태 확인 및 사용자에게 상태 알림
         if (isNetworkAvailable(this)) {
@@ -52,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+
+
     }
 
 
@@ -68,4 +56,5 @@ class MainActivity : AppCompatActivity() {
             else -> false
         }
     }
+
 }
