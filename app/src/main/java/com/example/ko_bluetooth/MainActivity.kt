@@ -1,5 +1,6 @@
 package com.example.ko_bluetooth
 
+import android.bluetooth.BluetoothAdapter
 import android.os.Bundle
 import android.content.Context
 import android.net.ConnectivityManager
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         // 네트워크 연결 상태 확인 및 사용자에게 상태 알림
         if (isNetworkAvailable(this)) {
             Toast.makeText(this, "네트워크 연결됨", Toast.LENGTH_LONG).show()
+            checkBluetoothState()
         } else {
             Toast.makeText(this, "네트워크 연결되지 않음", Toast.LENGTH_LONG).show()
         }
@@ -36,13 +38,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-
-
-
     }
-
-
 
     //네트워크 연결확인 함수
     fun isNetworkAvailable(context: Context): Boolean {
@@ -54,6 +50,19 @@ class MainActivity : AppCompatActivity() {
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
+        }
+    }
+
+    private fun checkBluetoothState() {
+        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+        if (bluetoothAdapter != null) {
+            if (bluetoothAdapter.isEnabled) {
+                Toast.makeText(this, "블루투스가 활성화되어 있습니다.", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "블루투스가 비활성화되어 있습니다.", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            Toast.makeText(this, "이 기기는 블루투스를 지원하지 않습니다.", Toast.LENGTH_LONG).show()
         }
     }
 
