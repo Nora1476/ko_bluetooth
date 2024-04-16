@@ -91,6 +91,8 @@ class MainActivity : AppCompatActivity() {
         val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = manager.adapter
     }
+
+
     //기기가 블루투스를 지원 여부 확인
     private fun isBluetoothSupported() = bluetoothAdapter != null
     //블루투스 활성화 여부를 확인
