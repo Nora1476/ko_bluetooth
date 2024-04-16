@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private var isReceiverRegistered = false
 
+
     //액티비티 생명주기 중 하나로, 액티비티가 생성될 때 호출.
     // 이 메소드 내에서 UI를 설정하고, 초기화 작업을 수행
     @RequiresApi(Build.VERSION_CODES.S)
