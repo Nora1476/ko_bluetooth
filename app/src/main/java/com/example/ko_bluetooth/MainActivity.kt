@@ -1,7 +1,5 @@
 package com.example.ko_bluetooth
 
-import com.example.ko_bluetooth.blue_service.BluetoothService
-
 import android.Manifest
 
 import android.bluetooth.BluetoothAdapter
@@ -182,11 +180,11 @@ class MainActivity : AppCompatActivity() {
             val action: String = intent.action!!
             if (BluetoothDevice.ACTION_FOUND == action) {
                 val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                val targetMacAddress = "D4:86:60:72:FC:2C"  // 연결하고자 하는 대상 기기의 MAC 주소
+//                val targetMacAddress = "D4:86:60:72:FC:2C"  // 연결하고자 하는 대상 기기의 MAC 주소
                 // MAC 주소 확인
-                if (device.address == targetMacAddress) {
+//                if (device.address == targetMacAddress) {
                     connectToDevice(device)
-                }
+//                }
             }
         }
     }
