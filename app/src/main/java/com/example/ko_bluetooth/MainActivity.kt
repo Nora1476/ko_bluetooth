@@ -24,22 +24,20 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_ACCESS_LOCATION = 2
 
     //액티비티 생명주기 중 하나로, 액티비티가 생성될 때 호출.
-    // 이 메소드 내에서 UI를 설정하고, 초기화ㄹ 작업을 수행
+    // 이 메소드 내에서 UI를 설정하고, 초기화 작업을 수행
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)  // XML 레이아웃 파일을 사용하여 UI를 구성
-        enableEdgeToEdge() //앱 컨텐츠가 상태 바, 내비게이션 바 아래로 확장될 수 있게
+        setContentView(R.layout.activity_main)
+        enableEdgeToEdge()
 
-        // 네트워크 연결 상태 확인 및 사용자에게 상태 알림
+        // 네트워크 연결 상태 확인
         if (isNetworkAvailable(this)) {
             Toast.makeText(this, "네트워크 연결됨", Toast.LENGTH_LONG).show()
-            checkBluetoothState()
-            searchBluetoothDevices()
+            checkBluetoothState() //블루투스 상태확인
 
         } else {
             Toast.makeText(this, "네트워크 연결되지 않음", Toast.LENGTH_LONG).show()
         }
-
 
         //윈도우 인셋을 적절하게 처리하고 뷰의 패딩을 설정하여 시스템 UI와의 겹침을 방지
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-    }
+    }//onCreate
 
     //네트워크 연결확인 함수
     fun isNetworkAvailable(context: Context): Boolean {
@@ -62,11 +60,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //블루투스 상태확인
     private fun checkBluetoothState() {
         val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter != null) {
             if (bluetoothAdapter.isEnabled) {
                 Toast.makeText(this, "블루투스가 활성화되어 있습니다.", Toast.LENGTH_LONG).show()
+                searchBluetoothDevices() // 기기 검색
             } else {
                 Toast.makeText(this, "블루투스가 비활성화되어 있습니다.", Toast.LENGTH_LONG).show()
             }
@@ -75,8 +75,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //블루투스 위치권한 확인(물리적 위치정보 유추)
     private fun searchBluetoothDevices() {
-        // 위치 권한을 확인하고 요청합니다.
+        // 위치 권한을 확인하고 요청
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_ACCESS_LOCATION)
         } else {
@@ -87,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //블루투스 검색권한 확인
     private fun startBluetoothDeviceDiscovery() {
         val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter != null) {
@@ -98,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //블루투스 기기 검색
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
