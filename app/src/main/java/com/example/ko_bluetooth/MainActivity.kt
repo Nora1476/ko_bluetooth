@@ -1,5 +1,7 @@
 package com.example.ko_bluetooth
 
+import com.example.ko_bluetooth.blue_service.BluetoothService
+
 import android.Manifest
 
 import android.bluetooth.BluetoothAdapter
