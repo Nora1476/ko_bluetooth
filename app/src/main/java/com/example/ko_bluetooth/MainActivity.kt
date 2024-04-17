@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_ACCESS_LOCATION = 1
         const val REQUEST_ENABLE_BLUETOOTH = 2
         const val REQUEST_BLUETOOTH_CONNECT = 3
+        const val REQUEST_BLUETOOTH_SCAN_PERMISSION = 4
+        const val REQUEST_ENABLE_BT = 5
     }
 
     //액티비티 생명주기 중 하나로, 액티비티가 생성될 때 호출.

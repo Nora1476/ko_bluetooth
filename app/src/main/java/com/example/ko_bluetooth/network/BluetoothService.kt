@@ -1,10 +1,12 @@
 package com.example.ko_bluetooth.network
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -20,6 +22,7 @@ class BluetoothService(private val context: Context) {
         manager.adapter
     }
 
+    //블루투스 사용가능기기 확인
     fun isBluetoothSupported() = bluetoothAdapter != null
 
     @RequiresApi(Build.VERSION_CODES.S)
@@ -42,16 +45,27 @@ class BluetoothService(private val context: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
-    private fun startBluetoothDeviceDiscovery() {ㅍ
-        if (bluetoothAdapter?.isEnabled == true) {
+    private fun startBluetoothDeviceDiscovery() {
+        if (bluetoothAdapter?.isEnabled != true) {
+            // 블루투스 활성화 요청
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            (context as Activity).startActivityForResult(enableBtIntent, MainActivity.REQUEST_ENABLE_BT)
+            showToast("블루투스를 활성화해주세요.")
+        } else {
+            // 블루투스 스캔 권한 확인
             val permissionCheck = ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN)
             Log.d("BluetoothService", "블루투스 스캔 권한 상태: $permissionCheck")
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                 bluetoothAdapter?.startDiscovery()
                 showToast("기기를 검색합니다.")
+            } else {
+                // 필요한 경우 권한 요청
+                ActivityCompat.requestPermissions(
+                    context as Activity,
+                    arrayOf(Manifest.permission.BLUETOOTH_SCAN),
+                    MainActivity.REQUEST_BLUETOOTH_SCAN_PERMISSION
+                )
             }
-        } else {
-            showToast("블루투스를 활성화해주세요.")
         }
     }
 
